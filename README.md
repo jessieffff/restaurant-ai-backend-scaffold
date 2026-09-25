@@ -1,11 +1,8 @@
 # Restaurant AI Backend Scaffold
 
-Start the Restaurant AI Agent Backend project from a working engineering
-foundation instead of an empty repository.
-
-This scaffold provides project wiring and development tooling. It deliberately
-does not implement reservations, ordering, agent workflows, RAG, messaging,
-authentication, or production operations; those remain course deliverables.
+Start the Restaurant AI Agent Backend project with a working FastAPI service,
+automated quality checks, local data-service definitions, GitHub workflow
+templates, and an engineering documentation structure.
 
 ## Create your private implementation repository
 
