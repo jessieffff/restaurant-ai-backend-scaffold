@@ -1,0 +1,50 @@
+name: Engineering task
+description: Define one bounded, testable project change.
+title: "[TASK] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Keep one task focused enough to complete in one short-lived branch and pull request.
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      description: What observable result should exist when this task is complete?
+      placeholder: A customer can...
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List deterministic, testable conditions.
+      placeholder: |
+        - [ ] Given ..., when ..., then ...
+        - [ ] Failure behavior is ...
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Required evidence
+      description: Identify tests, traces, screenshots, measurements, or documents.
+      placeholder: Unit test, integration test, trace ID, ADR, or report
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and risks
+      description: Link prerequisites and record known delivery risks.
+  - type: checkboxes
+    id: ready
+    attributes:
+      label: Ready checklist
+      options:
+        - label: The outcome is bounded and testable.
+          required: true
+        - label: Acceptance criteria include failure behavior.
+          required: true
+        - label: Required evidence is identified.
+          required: true
