@@ -19,7 +19,7 @@ async def liveness(
     settings: Annotated[Settings, Depends(get_settings)],
 ) -> HealthResponse:
     return HealthResponse(
-        service=settings.app_name,
+        service=settings.name,
         environment=settings.environment,
     )
 
@@ -28,7 +28,8 @@ async def liveness(
 async def readiness(
     settings: Annotated[Settings, Depends(get_settings)],
 ) -> HealthResponse:
+    # Session 3 extends this application-level check with dependency probes.
     return HealthResponse(
-        service=settings.app_name,
+        service=settings.name,
         environment=settings.environment,
     )

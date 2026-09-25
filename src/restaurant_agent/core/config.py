@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "Restaurant AI Backend"
+    name: str = "Restaurant AI Backend"
     environment: Literal["development", "test", "staging", "production"] = "development"
     log_level: str = "INFO"
 

@@ -30,6 +30,7 @@ packages = ["src/restaurant_agent"]
 
 [tool.pytest.ini_options]
 addopts = "--strict-markers --cov=restaurant_agent --cov-report=term-missing --cov-fail-under=90"
+pythonpath = ["."]
 testpaths = ["tests"]
 
 [tool.ruff]

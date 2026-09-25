@@ -4,11 +4,12 @@ set -euo pipefail
 
 select_python() {
   local candidate
+  local -a candidates
 
   if [[ -n "${PYTHON_BIN:-}" ]]; then
     candidates=("${PYTHON_BIN}")
   else
-    candidates=(python3.13 python3.12 python3.11 python3)
+    candidates=(python3.12 python3.13 python3.11 python3)
   fi
 
   for candidate in "${candidates[@]}"; do
@@ -27,7 +28,12 @@ select_python() {
 python_bin="$(select_python)"
 
 if [[ ! -d .venv ]]; then
-  "${python_bin}" -m venv .venv
+  if ! "${python_bin}" -m venv .venv; then
+    printf '%s\n' \
+      "Unable to create .venv. On Debian, Ubuntu, or WSL, install the matching python3-venv package." \
+      >&2
+    exit 1
+  fi
 fi
 
 .venv/bin/python -m pip install --upgrade pip

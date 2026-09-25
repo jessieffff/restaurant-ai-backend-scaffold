@@ -34,8 +34,11 @@ Requirements:
 - Python 3.11, 3.12, or 3.13
 - Git
 - Docker with Docker Compose
-- Ollama
 - GNU Make
+
+GitHub CLI authentication is required by Session 3 for the merge guard. Ollama
+is required by Session 6 for local model work. `make doctor` reports both as
+later requirements without blocking the initial setup.
 
 Prepare the local environment:
 
@@ -44,6 +47,9 @@ make bootstrap
 make doctor
 make check
 ```
+
+In the generated GitHub repository, open **Actions → quality → Run workflow**
+and confirm the first quality run passes.
 
 Start only the API during early development:
 
@@ -80,7 +86,7 @@ Do not reuse them outside the local environment.
 ## What is included
 
 - FastAPI application factory
-- Liveness and readiness endpoints
+- Liveness and application-level readiness endpoints
 - Pydantic settings loaded from environment variables
 - Unit tests
 - Ruff linting and formatting
@@ -88,14 +94,26 @@ Do not reuse them outside the local environment.
 - GitHub Actions quality workflow
 - Dockerfile
 - Docker Compose services for PostgreSQL/pgvector, Valkey, and RabbitMQ
+- Zero-cost pull-request merge guard for GitHub Free private repositories
 - Issue and pull-request templates
 - ADR, evidence, runbook, incident, and engineering-documentation templates
 - Local bootstrap and environment doctor scripts
+
+## Why this foundation is included
+
+| Foundation | Purpose |
+|---|---|
+| Runnable FastAPI service | Verifies the Python environment and provides the first executable vertical slice |
+| Quality checks and CI | Establishes one repeatable lint, type, test, and evidence workflow |
+| Local data services | Provides the PostgreSQL, vector, cache, and messaging systems used across later sessions |
+| GitHub templates and merge guard | Standardizes task delivery and provides a zero-cost controlled merge path |
+| Engineering documentation | Preserves decisions, contracts, operations knowledge, measurements, and evidence as the system grows |
 
 ## What you build during the course
 
 - Versioned customer, staff, and agent APIs
 - PostgreSQL schema, migrations, constraints, indexes, and transactions
+- Dependency-aware readiness for PostgreSQL, Valkey, and RabbitMQ
 - Reservation and ordering domains
 - Idempotency and concurrency controls
 - Valkey caching and rate limiting
@@ -136,6 +154,25 @@ After setup:
 5. Create a short-lived branch from `main`.
 6. Make one bounded change and open a pull request.
 7. Preserve the CI link in `docs/evidence/ledger.md`.
+
+## Pull-request merge guard
+
+Before Session 3, install and authenticate GitHub CLI:
+
+```bash
+gh auth login
+```
+
+Verify and squash-merge a pull request only after its CI checks pass:
+
+```bash
+make merge PR=123 DRY_RUN=1
+make merge PR=123
+```
+
+The guard requires an open, current, mergeable pull request targeting `main`,
+verifies every reported check is passing, locks the merge to the verified head
+commit, squash-merges, and deletes the source branch.
 
 ## Safety
 
